@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 damsory
 seeehpk
-=======
 baekseungkeon
->>>>>>> Stashed changes
+
