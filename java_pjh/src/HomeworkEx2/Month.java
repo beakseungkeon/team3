@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Month {
-	int month, money;
+	int month, money, num;
 
 	@Override
 	public boolean equals(Object obj) {

@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Income {
-	int year, month, date;
+	int month, date;
 	int incomeMoney;
 	String message;
 	@Override
