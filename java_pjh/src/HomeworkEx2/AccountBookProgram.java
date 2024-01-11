@@ -57,9 +57,9 @@ public class AccountBookProgram implements Program {
 	}
 
 	private void accountBookRemove() {//월 고르고 내역 삭제
-		System.out.print("월 입력 : ");
+		System.out.print("메모 입력 : ");
 		int month = scanner.nextInt();
-		abm.removeInitialization(month);
+		abm.removeInitialization(message);
 		
 	}
 

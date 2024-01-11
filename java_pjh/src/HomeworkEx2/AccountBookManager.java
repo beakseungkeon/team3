@@ -70,15 +70,13 @@ public class AccountBookManager {
 		
 	}
 	
-	public void removeInitialization(int month) { //아직 작동 안함
-		Income im = new Income(month);
-		Expense em = new Expense(month);
+	public void removeInitialization(String message) { //아직 작동 안함
+		Income im = new Income(message);
+		Expense em = new Expense(message);
 		//수입삭제할지 지출삭제할지 월 일 메모까지 해서 삭제할 거 결정
 		if(incomeList.contains(im)) {
 			System.out.println(incomeList.get(incomeList.indexOf(im)));
-		} else {
-			System.out.println("수입내역이 없습니다.");
-		}
+		} 
 		if(expenseList.contains(em)) {
 			System.out.println(expenseList.get(expenseList.indexOf(em)));
 		} else {
