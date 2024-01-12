@@ -1,4 +1,4 @@
-package HomeworkEx2;
+package hwteam3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,7 @@ public class AccountBookManager {
 		incomeList.add(income);
 		int month = income.month-1; // index 값 추출
 		int money = mList.get(month).money; 
+		
 		Month m = new Month(income.month, money+income.incomeMoney, 1); //기존 저장금액에 이번에 들어온 금액을 더해서 저장
 		mList.set(month, m);
 		
@@ -70,17 +71,14 @@ public class AccountBookManager {
 		
 	}
 	
-	public void removeInitialization(String message) { //아직 작동 안함
-		Income im = new Income(message);
-		Expense em = new Expense(message);
-		//수입삭제할지 지출삭제할지 월 일 메모까지 해서 삭제할 거 결정
-		if(incomeList.contains(im)) {
-			System.out.println(incomeList.get(incomeList.indexOf(im)));
-		} 
-		if(expenseList.contains(em)) {
-			System.out.println(expenseList.get(expenseList.indexOf(em)));
-		} else {
-			System.out.println("지출내역이 없습니다.");
+	public void removeInitialization(String message) {
+		for(int i=0;i<incomeList.size();i++) {
+			if(incomeList.get(i).getMessage().equals(message )) {
+				incomeList.remove(i);
+			}
+			else {System.out.println("해당하는 메모가 없습니다.");
+			
+			}
 		}
 		
 	}

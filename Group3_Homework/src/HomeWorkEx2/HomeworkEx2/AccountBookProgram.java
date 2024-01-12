@@ -1,4 +1,4 @@
-package HomeworkEx2;
+package hwteam3;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -57,8 +57,9 @@ public class AccountBookProgram implements Program {
 	}
 
 	private void accountBookRemove() {//월 고르고 내역 삭제
-		System.out.print("메모 입력 : ");
-		int month = scanner.nextInt();
+		System.out.print("삭제할 지출/수입의 메모 : ");
+		scanner.nextLine();
+		String message= scanner.nextLine();
 		abm.removeInitialization(message);
 		
 	}

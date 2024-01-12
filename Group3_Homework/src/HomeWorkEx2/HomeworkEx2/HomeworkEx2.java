@@ -1,4 +1,4 @@
-package HomeworkEx2;
+package hwteam3;
 
 public class HomeworkEx2 {
 

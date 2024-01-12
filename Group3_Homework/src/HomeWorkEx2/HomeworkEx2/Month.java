@@ -1,4 +1,4 @@
-package HomeworkEx2;
+package hwteam3;
 
 import java.util.Objects;
 import lombok.AllArgsConstructor;

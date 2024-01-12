@@ -1,4 +1,4 @@
-package HomeworkEx2;
+package hwteam3;
 
 import java.util.Objects;
 
@@ -34,7 +34,10 @@ public class Income {
 		super();
 		this.month = month;
 	}
-	
+	public Income(String message) {
+		
+		this.message=message;
+	}
 	
 	
 }
