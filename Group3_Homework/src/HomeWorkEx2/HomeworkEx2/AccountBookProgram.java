@@ -26,7 +26,7 @@ public class AccountBookProgram implements Program {
 				System.out.println("잘못된 입력입니다."); //<- 작동안함
 				scanner.nextLine();
 			}
-		} while(menu!=4);
+		} while(menu!=5);
 	}
 
 	@Override
@@ -35,7 +35,8 @@ public class AccountBookProgram implements Program {
 		System.out.println("1. 가계부 입력");
 		System.out.println("2. 가계부 조회");
 		System.out.println("3. 가계부 삭제");
-		System.out.println("4. 프로그램 종료");	
+		System.out.println("4. 가계부 수정");
+		System.out.println("5. 프로그램 종료");	
 		System.out.print("메뉴 입력 : ");
 	}
 	
@@ -51,8 +52,30 @@ public class AccountBookProgram implements Program {
 		case 1: accountBookInsert(); break;
 		case 2: accountBookShow(); break;
 		case 3: accountBookRemove(); break;
+		case 4: accountBookChange();break;
 		default: new InputMismatchException(); 
 		}
+		
+	}
+
+	private void accountBookChange() {
+		// TODO Auto-generated method stub
+		System.out.print("삭제할 지출/수입의 메모 : ");
+		scanner.nextLine();
+		String message= scanner.nextLine();
+		System.out.print("월 : ");
+		int month = scanner.nextInt();
+		System.out.print("일 : ");
+		int date = scanner.nextInt();
+		if(check(month, date)) {
+			return;
+		}
+		System.out.print("수입(원) : ");
+		int incomeMoney = scanner.nextInt();
+		System.out.print("메모 : ");
+		scanner.nextLine();
+		String message2 = scanner.nextLine();
+		abm.changeInitialization(month,date,incomeMoney,message,message2);
 		
 	}
 
@@ -115,9 +138,7 @@ public class AccountBookProgram implements Program {
 
 	private void accountBookShow() { //가계부 조회
 		System.out.println("---" + formatedYear + "년 가계부---");
-		if(abm.viewAllMonth()) {
-			return;
-		}
+		
 		System.out.print("월 검색 : ");
 		int month = scanner.nextInt();
 		if(month >12 || month<=0) {

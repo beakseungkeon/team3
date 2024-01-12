@@ -76,6 +76,9 @@ public class AccountBookManager {
 			if(incomeList.get(i).getMessage().equals(message )) {
 				incomeList.remove(i);
 			}
+			else if(expenseList.get(i).getMessage().equals(message )) {
+				expenseList.remove(i);
+			}
 			else {System.out.println("해당하는 메모가 없습니다.");
 			
 			}
@@ -83,4 +86,26 @@ public class AccountBookManager {
 		
 	}
 
+	public void changeInitialization(int month,int date,int incomeMoney,String message,String message2) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<incomeList.size();i++) {
+			if(incomeList.get(i).getMessage().equals(message)) {
+				incomeList.get(i).setDate(date);
+				incomeList.get(i).setMonth(month);
+				incomeList.get(i).setMessage(message2);
+				incomeList.get(i).setIncomeMoney(incomeMoney);
+				
+			}
+			else if(expenseList.get(i).getMessage().equals(message)){
+				expenseList.get(i).setDate(date);
+				expenseList.get(i).setMonth(month);
+				expenseList.get(i).setMessage(message2);
+				expenseList.get(i).setExpenseMoney(incomeMoney);
+			}
+			else {System.out.println("해당하는 메모가 없습니다.");
+			
+			}
+	
+		}
+	}
 }
