@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Expense {
+	/* 강사 피드백
+	 * - 년도 관리하는게 좋음.*/
 	int month, date;
 	int expenseMoney;
 	String message;

@@ -6,6 +6,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
+/* 강사 피드백
+ * - Month 클래스는 무슨 클래스인지?
+ * - num은 어떤 멤버인지?
+ * */
 public class Month {
 	int month, money, num;
 

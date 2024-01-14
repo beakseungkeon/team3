@@ -12,6 +12,8 @@ public class AccountBookProgram implements Program {
 	private AccountBookManager abm = new AccountBookManager();
 	private LocalDate nowYear = LocalDate.now();
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+	/* 강사 피드백
+	 * - 가계부 연도를 이렇게 관리하면 해가 바뀌면 가계부를 쓰지 않아도 작년 가계부가 올해 가계부로 됨.*/
 	private String formatedYear = nowYear.format(formatter);
 	@Override
 	public void run() {
@@ -80,6 +82,8 @@ public class AccountBookProgram implements Program {
 	}
 
 	private void accountBookRemove() {//월 고르고 내역 삭제
+		/* 강사 피드백
+		 * - 메모를 이용해서 삭제를 하면 동일한 메모가 있는 경우 원하지 않은 메모가 삭제될 수 있다.*/
 		System.out.print("삭제할 지출/수입의 메모 : ");
 		scanner.nextLine();
 		String message= scanner.nextLine();
@@ -167,6 +171,8 @@ public class AccountBookProgram implements Program {
 				return true;
 			}
 		}
+		/* 강사 피드백
+		 * - 윤달이 있는 해는 2월이 29일까지 있음.*/
 		if(month == 2) {
 			if(date<=0||date>28) {
 				System.out.println("잘못된 일 입력입니다.");
