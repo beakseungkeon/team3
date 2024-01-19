@@ -3,7 +3,7 @@ package university;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import program.Program;
+import Program.Program;
 import university.service.PrintMenu;
 
 public class UniversityProgram implements Program {
