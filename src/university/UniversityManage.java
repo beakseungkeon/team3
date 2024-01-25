@@ -17,7 +17,6 @@ public class UniversityManage {
 		student.add(std);
 		System.out.println("학생을 등록했습니다.");
 	}
-	
 	public void InsertDepartment(department dp) {
 		if(student.contains(dp)) {
 			System.out.println("이미 등록된 학과입니다.");
@@ -43,10 +42,7 @@ public class UniversityManage {
 			if(student.get(i).getName().equals(name)) {
 				student.get(i).setName(newName);
 				student.get(i).setAge(newAge);
-				
 			}
 		}
-		
-		
 	}
 }

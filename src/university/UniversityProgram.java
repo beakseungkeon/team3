@@ -1,12 +1,10 @@
 package university;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
-import program.Program;
 import university.service.PrintMenu;
 
-public class UniversityProgram implements Program {
+public class UniversityProgram implements program.Program {
 	
 	PrintMenu pm = new PrintMenu();
 	UniversityManage um = new UniversityManage();
