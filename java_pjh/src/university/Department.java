@@ -29,7 +29,13 @@ public class Department {
 		return Objects.hash(name);
 	}
 	public Department(String name) {
-		super();
 		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return "[학과이름 = " + name + ", 학과코드 = " + code + ", 학생 목록 = " + student + "]";
+	}
+	public Department(int code) {
+		this.code = code;
 	}
 }
