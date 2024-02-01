@@ -43,7 +43,7 @@ public class UniversityManage {
 		String indexNum = Integer.toString(this.department.get(index).getCode());
 		int stdCount = 1;
 		for(int i=0; i<student.size(); i++) {
-			if(student.get(i).name.equals(department)) {
+			if(student.get(i).department.equals(department)) {
 				stdCount++;
 			}
 		}
@@ -57,7 +57,7 @@ public class UniversityManage {
 		return true;
 	}
 	
-	boolean updateStd(int num, String name, int age) { // 수강중인 강의는 수강신청부분에서 바꿀 수 있으므로 학생정보수정은 이름, 나이 // 학과 수정은 만들기 번거롭기 때문에 따로 학과 이동 메서드를 만들어서 구현 
+	boolean updateStd(int num, String name, int age) { // 수강중인 강의는 수강신청부분에서 바꿀 수 있으므로 학생정보수정은 이름, 나이 
 		People stdNum = new People(num);
 		if(!student.contains(stdNum)) {
 			System.out.println("해당학번의 학생이 존재하지 않습니다.");
@@ -91,9 +91,7 @@ public class UniversityManage {
 		
 		if(department.size()==0) {
 			rnum = (int)(Math.random()*(max-min+1)+min);
-			List<People> std = new ArrayList<People>();
-			List<People> pro = new ArrayList<People>();
-			Department d = new Department(name, rnum, std, pro);
+			Department d = new Department(name, rnum);
 			department.add(d);
 			return true;
 		}
@@ -111,9 +109,7 @@ public class UniversityManage {
 			}
 		}
 		
-		List<People> std = new ArrayList<People>();
-		List<People> pro = new ArrayList<People>();
-		Department d = new Department(name, rnum, std, pro);
+		Department d = new Department(name, rnum);
 		department.add(d);
 		return true;
 	}
@@ -161,8 +157,14 @@ public class UniversityManage {
 		//학과번호를 받아서 등록하는날의연도+학과코드+1~ 의 교번을 생성
 		index = this.department.indexOf(d);
 		String indexNum = Integer.toString(this.department.get(index).getCode());
-		int stdCount = this.department.get(index).getStudent().size()+101; //학번과 교번을 구분하기 위해 교번은 101번부터 시작(학생은 1번)
-		num = "2024"+indexNum+Integer.toString(stdCount);      //<--"2024" 부분 날짜 클래스 사용하는 것으로 수정해야 함
+		int stdCount = 1;
+		for(int i=0; i<professor.size(); i++) {
+			if(professor.get(i).department.equals(department)) {
+				stdCount++;
+			}
+		}
+		//학번과 교번을 구분하기 위해 교번은 101번부터 시작(학생은 1번)
+		num = "2024"+indexNum+Integer.toString(stdCount+100);      //<--"2024" 부분 날짜 클래스 사용하는 것으로 수정해야 함
 		People std = new People(name, age, Integer.parseInt(num), department);
 		professor.add(std);
 		
@@ -174,7 +176,7 @@ public class UniversityManage {
 	boolean updatePro(int num, String name, int age) {
 		People proNum = new People(num);
 		if(!professor.contains(proNum)) {
-			System.out.println("해당학번의 교수가 존재하지 않습니다.");
+			System.out.println("해당교번의 교수가 존재하지 않습니다.");
 			return false;
 		}
 		int index = professor.indexOf(proNum);
@@ -198,13 +200,9 @@ public class UniversityManage {
 	boolean insertLecture(int num, String name) { //name은 강의이름 같은 이름의 강의이름은 중복있을 수도 있음
 		int min=1000, max=9999; 
 		if(!checkNum(1,num)) { //교번 확인이니까 1
-			System.out.println("해당되는 교번이 없습니다.");
+			System.out.println("해당교번의 교수가 존재하지 않습니다.");
 			return false;
 		}
-		
-		People pnum = new People(num);
-		int index = professor.indexOf(pnum);
-		String proName = professor.get(index).name; //교수이름
 		
 		int code;
 		while(true) {
@@ -215,7 +213,7 @@ public class UniversityManage {
 			} else {break;}
 		}
 		HashMap<Integer, String> score = new HashMap<Integer, String>();
-		Lecture lecture = new Lecture(name, code, score, proName); 
+		Lecture lecture = new Lecture(name, code, score, num); 
 		this.lecture.add(lecture);
 		return true;
 	}
@@ -233,7 +231,7 @@ public class UniversityManage {
 	
 	boolean removeLecture(int num, int code) {
 		if(!checkNum(1, num)) { //교번이니까 1
-			System.out.println("해당되는 교번이 없습니다.");
+			System.out.println("해당교번의 교수가 존재하지 않습니다.");
 			return false;
 		}
 		Lecture lcode = new Lecture(code);
@@ -258,9 +256,8 @@ public class UniversityManage {
 		}
 		//lecture 리스트에 학생번호 넣기
 		int index = lecture.indexOf(lcode); //학생이 입력한 강의코드에 맞는 리스트 번호
-		System.out.println(index);
 		//이 밑으로 오류
-		lecture.get(index).score.put(num, null); //성적의 초기값 null
+		lecture.get(index).score.put(num, "N"); //성적의 초기값 null
 		return true;
 	}
 	
@@ -276,10 +273,24 @@ public class UniversityManage {
 		}
 		//lecture 리스트에 학생번호 넣기
 		int index = lecture.indexOf(lcode); //학생이 입력한 강의코드에 맞는 리스트 번호
-		System.out.println(index);
 		
 		lecture.get(index).score.remove(num); //입력받은 학번에 맞는 score 해쉬맵의 값을 지움
 		return true;
+	}
+	
+	boolean insertScore(int index, int num, String score) {
+		lecture.get(index).score.put(num, score);		
+		return true;
+	}
+	
+	boolean removeScore(int index, int num) {
+		lecture.get(index).score.remove(num);
+		return true;
+	}
+	void showScore(int code) {
+		Lecture lcode = new Lecture(code);
+		int index = lecture.indexOf(lcode);
+		System.out.println(lecture.get(index).score);
 	}
 	
 }

@@ -1,6 +1,5 @@
 package university;
 
-import java.util.List;
 import java.util.Objects;
 
 import lombok.AllArgsConstructor;
@@ -11,8 +10,6 @@ import lombok.Data;
 public class Department {
 	String name;
 	int code;
-	List<People> student;
-	List<People> professor;
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -30,10 +27,6 @@ public class Department {
 	}
 	public Department(String name) {
 		this.name = name;
-	}
-	@Override
-	public String toString() {
-		return "[학과이름 = " + name + ", 학과코드 = " + code + ", 학생 목록 = " + student + "]";
 	}
 	public Department(int code) {
 		this.code = code;

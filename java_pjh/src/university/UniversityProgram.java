@@ -47,7 +47,7 @@ public class UniversityProgram implements Program {
 		int menu = scanner.nextInt();
 		switch(menu) {
 		case 1: stdLectureManage(); break;
-		case 2: showScore(); break; //성적조회 - 학번 입력 받으면 자신이 수강중인 과목의 성적 나열
+		case 2: showStdScore(); break; //성적조회 - 학번 입력 받으면 자신이 수강중인 과목의 성적 나열
 		default: new InputMismatchException(); break;
 		}
 	}
@@ -93,12 +93,13 @@ public class UniversityProgram implements Program {
 		int lectureCode = scanner.nextInt();
 		if(um.removeStdLecture(stdNum, lectureCode)) {
 			System.out.println("수강신청취소완료");
+			return;
 		}
 		System.out.println("취소실패");
 	}
 
-	private void showScore() { //학생(개인) 성적 조회 & 수강중인 강의목록을 전체조회(성적이 없더라도 조회 됨)
-		System.out.print("학번을 입력해주세요");
+	private void showStdScore() { //학생(개인) 성적 조회 & 수강중인 강의목록을 전체조회(성적이 없더라도 조회 됨)
+		System.out.print("학번을 입력해주세요 : ");
 		int stdNum = scanner.nextInt();
 		for(int i=0; i<um.lecture.size(); i++) {
 			if(um.lecture.get(i).score.containsKey(stdNum)) {
@@ -173,13 +174,100 @@ public class UniversityProgram implements Program {
 	
 	private void showLecture() { //전체 강의 조회
 		for(int i=0; i<um.lecture.size(); i++) {
-			System.out.println("강의이름 : " + um.lecture.get(i).name + "  |강의 코드 : " + um.lecture.get(i).code + "  |담당교수 : " + um.lecture.get(i).professor);
+			int num = um.lecture.get(i).proCode; //담당교수의 교번
+			People pnum = new People(num);
+			int index = um.professor.indexOf(pnum);
+			String proName = um.professor.get(index).name;//담당교수의 이름
+			System.out.println("강의이름 : " + um.lecture.get(i).name + "  |강의 코드 : " + um.lecture.get(i).code + "  |담당교수 : " + proName);
 		}
 	}
 
 	private void scoreManage() {
+		pm.printSubMenu2_2();
+		int menu = scanner.nextInt();
+		switch(menu) {
+		case 1: insertScore(); break; //성적 등록/수정
+		case 2: removeScore(); break; //성적 삭제
+		case 3: showScore(); break; //성적 조회
+		default: new InputMismatchException(); break;
+		}
 		
-		
+	}
+
+	private void insertScore() {
+		/*
+		 * 교번입력받기
+		 * 입력받은 교번의 교수님이 담당하는 강의와 강의코드 출력
+		 * 입력할 강의의 코드 입력하기
+		 * 입력받은 강의를 수강중인 학생의 이름과 학번출력
+		 * 성적을 입력받을 학생의 학번 입력받기
+		 * 입력할 성적 입력받기 
+		 */
+		System.out.print("교수님의 교번을 입력해주세요 : ");
+		int num = scanner.nextInt();
+		if(!um.checkNum(1, num)) {
+			System.out.println("해당교번의 교수가 존재하지 않습니다.");
+			return;
+		}
+		System.out.println("담당중인 강의 : ");
+		for(int i=0; i<um.lecture.size(); i++) {
+			if(um.lecture.get(i).proCode==num) {
+				System.out.println(um.lecture.get(i).name + " : " + um.lecture.get(i).code);
+			}
+		}
+		System.out.print("성적을 입력/수정할 강의코드를 입력해주세요 : ");
+		int lectureNum = scanner.nextInt();
+		Lecture lcode = new Lecture(lectureNum);
+		int index = um.lecture.indexOf(lcode); 
+		System.out.println("현재 수강중인 학생 : ");
+		System.out.println(um.lecture.get(index).score);
+		System.out.print("성적을 입력/수정할 학생의 학번을 입력하세요 : ");
+		int stdNum = scanner.nextInt();
+		System.out.print("학생의 성적을 입력하세요 : ");
+		String score = scanner.next();
+		if(um.insertScore(index, stdNum, score)) {
+			System.out.println("정상적으로 입력되었습니다.");
+			return;
+		}
+		System.out.println("입력 실패");
+	}
+
+	private void removeScore() {
+		System.out.print("교수님의 교번을 입력해주세요 : ");
+		int num = scanner.nextInt();
+		if(!um.checkNum(1, num)) {
+			System.out.println("해당교번의 교수가 존재하지 않습니다.");
+			return;
+		}
+		System.out.println("담당중인 강의 : ");
+		for(int i=0; i<um.lecture.size(); i++) {
+			if(um.lecture.get(i).proCode==num) {
+				System.out.println(um.lecture.get(i).name + " : " + um.lecture.get(i).code);
+			}
+		}
+		System.out.print("성적을 삭제할 강의코드를 입력해주세요 : ");
+		int lectureNum = scanner.nextInt();
+		Lecture lcode = new Lecture(lectureNum);
+		int index = um.lecture.indexOf(lcode); 
+		System.out.println("현재 수강중인 학생 : ");
+		System.out.println(um.lecture.get(index).score);
+		System.out.print("성적을 삭제할 학생의 학번을 입력하세요 : ");
+		int stdNum = scanner.nextInt();
+		if(um.removeScore(index, stdNum)) {
+			System.out.println("정상적으로 삭제되었습니다.");
+			return;
+		}
+		System.out.println("삭제 실패");
+	}
+
+	private void showScore() {
+		System.out.println("현재 강의 목록");
+		for(int i=0; i<um.lecture.size(); i++) {
+			System.out.println(um.lecture.get(i).name + " : " + um.lecture.get(i).code);
+		}
+		System.out.print("조회하려는 학과의 코드를 입력하세요 : ");
+		int code = scanner.nextInt();
+		um.showScore(code);
 	}
 
 	private void departmentList() { //학과조회
@@ -251,16 +339,14 @@ public class UniversityProgram implements Program {
 	}
 
 	private void showProfessor() { //전체 교수조회
+		List<String> llist = new ArrayList<String>();
 		for(int i=0; i<um.professor.size(); i++) {
-			/*String name = um.professor.get(i).name; //0번째 교수이름
-			Lecture lname = new Lecture(name);
-			List index = new ArrayList<String>();
-			for(int j=0; j<um.lecture.size(); i++) {
-				if(name.equals(um.lecture.get(j).professor)) {
-					index.add(um.lecture.get(i).name);
+			for(int j=0; j<um.lecture.size(); j++) {
+				if(um.lecture.get(j).proCode==um.professor.get(i).num) {
+					llist.add(um.lecture.get(j).name);
 				}
-			}*/
-			System.out.println("[교수이름 : "+ um.professor.get(i).name+"  나이 : " + um.professor.get(i).age+"  번호 : " + um.professor.get(i).num+ "  학과 : "+um.professor.get(i).department+"  담당중인 강의 : [미구현]" +"]");
+			}
+			System.out.println("[교수이름 : "+ um.professor.get(i).name+"  나이 : " + um.professor.get(i).age+"  번호 : " + um.professor.get(i).num+ "  학과 : "+um.professor.get(i).department+"  담당중인 강의 : " + llist + "]");
 		}
 	}
 
@@ -277,8 +363,15 @@ public class UniversityProgram implements Program {
 	}
 
 	private void showStudent() { //전체 학생 조회
+		List<String> slist = new ArrayList<String>();
 		for(int i=0; i<um.student.size(); i++) {
-			System.out.println("[학생이름 : "+ um.student.get(i).name+"  나이 : " + um.student.get(i).age+"  번호 : " + um.student.get(i).num+ "  학과 : "+um.student.get(i).department+"  수강중인 강의 : [미구현]" + "]");
+			for(int j=0; j<um.lecture.size(); j++) {
+				if(um.lecture.get(j).score.containsKey(um.student.get(i).num)) {
+					//강의리스트안의 성적맵에 학생의 학번과 같은 학번이 있으면 그 강의를 수강중인 것
+					slist.add(um.lecture.get(j).name);
+				}
+			}
+			System.out.println("[학생이름 : "+ um.student.get(i).name+"  나이 : " + um.student.get(i).age+"  번호 : " + um.student.get(i).num+ "  학과 : "+um.student.get(i).department+"  수강중인 강의 : " + slist + "]");
 			//수강중인 강의 department 리스트로 출력
 		}
 	}
@@ -335,8 +428,22 @@ public class UniversityProgram implements Program {
 
 	private void showDepartment() { //과 조회
 		for(int i=0; i<um.department.size(); i++) {
-			System.out.println("[학과이름 : "+um.department.get(i).name + "  학과코드 : " + um.department.get(i).code+"  담당교수 : " + um.department.get(i).professor + 
-					"  학생목록 : " + um.department.get(i).student.toString()+"]");
+			List<String> proList = new ArrayList<String>();
+			List<String> stdList = new ArrayList<String>();
+			for(int j=0; j<um.professor.size(); j++) {
+				if(um.professor.get(i).department.equals(um.department.get(i).name)) {
+					//교수리스트에 등록되어있는 이름과 과이름이 동일하면
+					proList.add(um.professor.get(j).name);
+				}
+			}
+			for(int j=0; j<um.student.size(); j++) {
+				if(um.student.get(i).department.equals(um.department.get(i).name)) {
+					//교수리스트에 등록되어있는 이름과 과이름이 동일하면
+					stdList.add(um.student.get(j).name);
+				}
+			}
+			System.out.println("[학과이름 : "+um.department.get(i).name + "  학과코드 : " + um.department.get(i).code+"  교수목록 : " + proList + 
+					"  학생목록 : " + stdList +"]");
 		}
 	}
 

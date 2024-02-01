@@ -42,10 +42,9 @@ public class PrintMenu {
 	}
 	
 	public void printSubMenu2_2() {
-		System.out.println("1. 성적 등록");
-		System.out.println("2. 성적 수정");
-		System.out.println("3. 성적 삭제");
-		System.out.println("4. 성적 조회");
+		System.out.println("1. 성적 등록/수정");
+		System.out.println("2. 성적 삭제");
+		System.out.println("3. 성적 조회");
 		System.out.print("메뉴 선택 : ");
 	}
 	
