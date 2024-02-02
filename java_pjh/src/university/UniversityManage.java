@@ -50,9 +50,6 @@ public class UniversityManage {
 		num = "2024"+indexNum+Integer.toString(stdCount);                //<--"2024" 부분 날짜 클래스 사용하는 것으로 수정해야 함
 		People std = new People(name, age, Integer.parseInt(num), department);
 		student.add(std);
-		
-		//학생의 학과에 맞춰서 학과클래스의 변수 중 하나인 학생리스트에 학생을 넣어줌
-//		this.department.get(index).getStudent().add(std); //초기화 메서드 생성해서 따로 관리하지 않으면 매번 따로 모든 메서드에서 입력해줘야 함
 
 		return true;
 	}
@@ -119,6 +116,16 @@ public class UniversityManage {
 		if(department.contains(dname)) {
 			int index = department.indexOf(dname);
 			department.get(index).setName(name2);
+			for(int i=0; i<student.size(); i++) {
+				if(student.get(i).department.equals(name)) {
+					student.get(i).department = name2;
+				}
+			}
+			for(int i=0; i<professor.size(); i++) {
+				if(professor.get(i).department.equals(name)) {
+					professor.get(i).department = name2;
+				}
+			}
 			return true;
 		}
 		else {

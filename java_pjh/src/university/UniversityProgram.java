@@ -172,7 +172,7 @@ public class UniversityProgram implements Program {
 		System.out.println("삭제 실패");
 	}
 	
-	private void showLecture() { //전체 강의 조회
+	private void showLecture() { //일부 강의 조회
 		for(int i=0; i<um.lecture.size(); i++) {
 			int num = um.lecture.get(i).proCode; //담당교수의 교번
 			People pnum = new People(num);
@@ -426,18 +426,18 @@ public class UniversityProgram implements Program {
 		}
 	}
 
-	private void showDepartment() { //과 조회
+	private void showDepartment() { //관리자) 전체 과 조회
 		for(int i=0; i<um.department.size(); i++) {
 			List<String> proList = new ArrayList<String>();
 			List<String> stdList = new ArrayList<String>();
 			for(int j=0; j<um.professor.size(); j++) {
-				if(um.professor.get(i).department.equals(um.department.get(i).name)) {
+				if(um.professor.get(j).department.equals(um.department.get(i).name)) {
 					//교수리스트에 등록되어있는 이름과 과이름이 동일하면
 					proList.add(um.professor.get(j).name);
 				}
 			}
 			for(int j=0; j<um.student.size(); j++) {
-				if(um.student.get(i).department.equals(um.department.get(i).name)) {
+				if(um.student.get(j).department.equals(um.department.get(i).name)) {
 					//교수리스트에 등록되어있는 이름과 과이름이 동일하면
 					stdList.add(um.student.get(j).name);
 				}
