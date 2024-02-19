@@ -20,7 +20,7 @@ public interface MemberService {
 
 	boolean addTitle(String title);
 
-	ArrayList<Category> getMemberListCa(String title);
+	
 
 	boolean deleteCa(String title);
 
@@ -41,6 +41,12 @@ public interface MemberService {
 	
 
 	boolean updatePo(String bo_title, String ca_title, post post);
+
+	ArrayList<Category> getMemberListCa(String ca_title);
+
+	ArrayList<post> getMemberListPo(String po_title);
+
+	boolean deleteCo(String po_title, String bo_title, String ca_title, int co_num);
 
 	
 

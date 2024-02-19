@@ -104,6 +104,16 @@ public class MemberServiceImp implements MemberService {
 		// TODO Auto-generated method stub
 		return memberDao.updatePo(bo_title,ca_title,post);
 	}
+	@Override
+	public ArrayList<post> getMemberListPo(String po_title) {
+		// TODO Auto-generated method stub
+		return memberDao.selectMemberListPo(po_title);
+	}
+	@Override
+	public boolean deleteCo(String po_title, String bo_title, String ca_title, int co_num) {
+		// TODO Auto-generated method stub
+		return memberDao.deleteCo(po_title,bo_title,ca_title,co_num);
+	}
 	
 	
 	
