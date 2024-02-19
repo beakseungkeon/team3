@@ -28,7 +28,7 @@
 		select * from post
 		where po_bo_num = #{bo_num}
 		order by po_num desc
-		limit #{postListNum},#{postListNum5}
+		limit #{postListNum},5
 	</select>
 	<select id="getDetailPost" resultType="team3_Project1.model.vo.Post">
 		select * from post
@@ -55,4 +55,53 @@
 		select * from comment
 		where co_po_num = #{co_po_num}
 	</select>
+	<insert id="addMember">
+	insert into member(me_id,me_pw,me_name,me_email) values(#{member.id},#{member.pw},#{member.nickname},#{member.email})
+	</insert>
+ 	<select id="selectMemberList" resultType="team3_Project1.model.vo.Member">
+  		select * from member where me_email=#{email}
+  	</select>
+  	
+  	<select id="selectMemberListid" resultType="team3_Project1.model.vo.Member">
+  		select * from member where me_id=#{id}
+  	</select>
+  	<delete id="deleteUser">
+  		delete from member where me_id=#{id}
+  	</delete>
+  	<insert id="addTitle">
+  	insert into category(ca_title)values(#{title})
+  	</insert>
+  	<select id="selectMemberListCa" resultType="team3_Project1.model.vo.Category">
+  		select * from category;
+  	</select>
+  	<delete id="deleteCa">
+  		delete from category where ca_title=#{title}
+  	</delete>
+  	<select id="selectMemberListBo" resultType="team3_Project1.model.vo.Board" >
+  		select * from Board;
+  	</select>
+  	<delete id="deleteBo">
+  		delete from board where bo_title=#{title}
+  	</delete>
+  	<insert id="addTitleBo">
+ 		insert into board(bo_title,bo_ca_title)values(#{board.bo_title},#{board.bo_ca_title})
+  	</insert>
+  	<insert id="addTitlePo">
+  		insert into post(po_content,po_title,po_me_id,po_me_name,po_view,po_bo_num)
+  		value(#{post.po_content},#{post.po_title},'admin','admin',0,(select bo_num from board 
+  																		where bo_ca_title = #{ca_title} and bo_title = #{bo_title} ));
+  	</insert>
+  	<delete id="deletePo">
+  		delete from post where po_bo_num=(select bo_num from board where bo_ca_title=#{ca_title}and bo_title=#{bo_title}and po_title=#{po_title});
+  	</delete>
+  	<update id="updatePo">
+  		update post set po_content=#{post.po_content}where(select bo_num from board where bo_ca_title=#{ca_title}and bo_title=#{bo_title}and po_title=#{post.po_title});
+  	</update>
+  	<select id="selectMemberListPo" resultType="team3_Project1.model.vo.Post">
+  		select * from post
+  	</select>
+  	<delete id="deleteCo">
+  		delete from comment where co_po_num = (select co_po_num from post 
+  												join board on po_bo_num = bo_num where bo_ca_title = #{ca_title} and bo_title = #{bo_title} and po_title = #{po_title}and co_num = #{co_num})
+  	</delete>
 </mapper>

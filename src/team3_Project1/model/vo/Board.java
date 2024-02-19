@@ -2,9 +2,11 @@ package team3_Project1.model.vo;
 
 import java.util.Objects;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Board {
 	private int bo_num;
 	private String bo_title;
@@ -28,6 +30,11 @@ public class Board {
 	public Board(int bo_num) {
 		super();
 		this.bo_num = bo_num;
+	}
+	public Board(String bo_title, String bo_ca_title) {
+		super();
+		this.bo_title = bo_title;
+		this.bo_ca_title = bo_ca_title;
 	}
 	
 }

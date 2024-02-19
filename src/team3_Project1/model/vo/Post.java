@@ -43,5 +43,10 @@ public class Post {
 		this.po_bo_num = po_bo_num;
 		this.po_me_name = po_me_name;
 	}
+	public Post(String po_content, String po_title) {
+		super();
+		this.po_content = po_content;
+		this.po_title = po_title;
+	}
 	
 }

@@ -3,9 +3,9 @@ package team3_Project1.main;
 import java.util.Scanner;
 
 import team3_Project1.controller.BoardLogin;
-import team3_Project1.controller.FindId;
-import team3_Project1.controller.FindPw;
-import team3_Project1.controller.JoinMember;
+import team3_Project1.controller.memberController.FindId;
+import team3_Project1.controller.memberController.FindPw;
+import team3_Project1.controller.memberController.JoinMember;
 
 public class Main {
 
