@@ -45,4 +45,10 @@
   	<update id="updatePo">
   		update post set po_content=#{post.po_content}where(select bo_num from board where bo_ca_title=#{ca_title}and bo_title=#{bo_title}and po_title=#{post.po_title});
   	</update>
+  	<select id="selectMemberListPo" resultType="community.model.vo.post">
+  		select * from post ;
+  	</select>
+  	<delete id="deleteCo">
+  		delete from comment where co_po_num=(select co_po_num from post join board on po_bo_num=bo_num where bo_ca_title=#{ca_title} and bo_title=#{bo_title}and po_title=#{po_title}and co_num={co_num}  )
+  	</delete>
 </mapper>

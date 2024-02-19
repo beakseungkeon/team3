@@ -47,6 +47,10 @@ public interface MemberDAO {
 	
 	boolean updatePo(@Param("bo_title") String bo_title,@Param("ca_title") String ca_title,@Param("post") post post);
 
+	ArrayList<post> selectMemberListPo(@Param("po_title")String po_title);
+
+	boolean deleteCo(@Param("po_title")String po_title,@Param("bo_title") String bo_title, @Param("ca_title")String ca_title, @Param("co_num")int co_num);
+
 	
 	
 
