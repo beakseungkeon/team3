@@ -67,5 +67,9 @@ public interface BoardDAO {
 	
 	boolean deleteCo(@Param("po_title")String po_title,@Param("bo_title") String bo_title, @Param("ca_title")String ca_title, @Param("co_num")int co_num);
 
+	void updateMyBoard(@Param("po_num")int po_num, @Param("po_title")String po_title, @Param("po_content")String po_content);
+
+	void deleteMyBoard(int po_num);
+
 	
 }

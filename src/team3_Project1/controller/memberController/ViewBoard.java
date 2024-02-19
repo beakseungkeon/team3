@@ -185,18 +185,27 @@ public class ViewBoard {
 		System.out.println("2. 글 삭제");
 		System.out.print("메뉴 선택 : ");
 		int postMenu = scan.nextInt();
-		manageMyBoard(postMenu);
+		manageMyBoard(postMenu, myPostList.get(index).getPo_num());
 	}
 
-	private void manageMyBoard(int postMenu) {
+	private void manageMyBoard(int postMenu, int po_num) {
+		ManageMyBoard manageMyBoard = new ManageMyBoard(po_num);
 		switch(postMenu) {
 		case 1:
 			//게시글 수정
-			
+			if(manageMyBoard.updateBoard()) {
+				System.out.println("수정완료");
+				return;
+			}
+			System.out.println("수정 실패");
 			break;
 		case 2:
 			//게시글 삭제
-			
+			if(manageMyBoard.deleteBoard()) {
+				System.out.println("삭제 성공");
+				return;
+			}
+			System.out.println("삭제 실패");
 			break;
 		default: 
 			System.out.println("잘못된 선택");

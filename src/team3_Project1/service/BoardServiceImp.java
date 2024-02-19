@@ -107,5 +107,17 @@ public class BoardServiceImp implements BoardService {
 	public List<Comment> getCommentList(int co_po_num) {
 		return boardDao.getCommentList(co_po_num);
 	}
+
+	@Override
+	public boolean updateMyBoard(int po_num, String po_title, String po_content) {
+		boardDao.updateMyBoard(po_num, po_title, po_content);
+		return true;
+	}
+
+	@Override
+	public boolean deleteMyBoard(int po_num) {
+		boardDao.deleteMyBoard(po_num);
+		return true;
+	}
 	
 }
