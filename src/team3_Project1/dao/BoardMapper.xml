@@ -9,4 +9,50 @@
 	<insert id="insertMember">
 		insert into member(me_id, me_pw, me_email, me_name) values(#{member.me_id}, #{member.me_pw}, #{member.me_email}, #{member.me_name})
 	</insert>
+	<select id="getCategory" resultType="team3_Project1.model.vo.Category">
+		select * from category
+	</select>
+	<select id="getMyPost" resultType="team3_Project1.model.vo.Post">
+		select * from post 
+		where po_me_id = #{me_id}
+	</select>
+	<select id="getMyComment" resultType="team3_Project1.model.vo.Comment">
+		select * from comment
+		where co_me_id = #{me_id};
+	</select>
+	<select id="getBoard" resultType="team3_Project1.model.vo.Board">
+		select * from board
+		where bo_ca_title = #{ca_title}
+	</select>
+	<select id="getPost" resultType="team3_Project1.model.vo.Post">
+		select * from post
+		where po_bo_num = #{bo_num}
+		order by po_num desc
+		limit #{postListNum},#{postListNum5}
+	</select>
+	<select id="getDetailPost" resultType="team3_Project1.model.vo.Post">
+		select * from post
+		where po_num = #{num}
+	</select>
+	<select id="getName" resultType="string">
+		select * from member
+		where me_name = #{name}
+	</select>
+	<update id="updateView">
+		update post
+		set po_view = po_view+1
+		where po_num = #{num}
+	</update>
+	<insert id="insertPost">
+		insert into post(po_content, po_title, po_me_id, po_bo_num, po_me_name)
+		values(#{post.po_content}, #{post.po_title}, #{post.po_me_id}, #{post.po_bo_num}, #{post.po_me_name})
+	</insert>
+	<insert id="insertComment">
+		insert into comment(co_content, co_po_num, co_me_id)
+		values(#{comment.co_content}, #{comment.co_po_num}, #{comment.co_me_id})
+	</insert>
+	<select id="getCommentList" resultType="team3_Project1.model.vo.Comment">
+		select * from comment
+		where co_po_num = #{co_po_num}
+	</select>
 </mapper>

@@ -1,6 +1,9 @@
 package team3_Project1.controller;
 
+import java.util.List;
 import java.util.Scanner;
+
+import team3_Project1.model.vo.Member;
 import team3_Project1.service.BoardService;
 import team3_Project1.service.BoardServiceImp;
 
@@ -18,7 +21,30 @@ public class BoardLogin {
 	}
 
 	public void run() {
-
+		System.out.println("---로그인---");
+		System.out.print("아이디 : ");
+		String id = scan.next();
+		System.out.print("비밀번호 : ");
+		String pw = scan.next();
+		memberMain(id, pw);
+	}
+	
+	public void memberMain(String id, String pw) {
+		List<Member> memberList = boardService.getMember();
+		for(Member i:memberList) {
+			//관리자 로그인
+			
+			if(id.equals(i.getMe_id())) {
+				if(pw.equals(i.getMe_pw())) {
+					System.out.println("로그인 성공");
+					System.out.println("반갑습니다. " + i.getMe_name() + " 님");
+					ViewBoard viewBoard = new ViewBoard(scan);
+					viewBoard.run(i.getMe_id());
+					return;
+				}
+			}
+		}
+		System.out.println("로그인 실패");
 	}
 
 }

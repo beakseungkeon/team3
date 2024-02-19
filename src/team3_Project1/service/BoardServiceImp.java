@@ -10,7 +10,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import team3_Project1.dao.BoardDAO;
+import team3_Project1.model.vo.Board;
+import team3_Project1.model.vo.Category;
+import team3_Project1.model.vo.Comment;
 import team3_Project1.model.vo.Member;
+import team3_Project1.model.vo.Post;
 
 public class BoardServiceImp implements BoardService {
 
@@ -41,6 +45,67 @@ public class BoardServiceImp implements BoardService {
 			return false;
 		}
 		return boardDao.insertMember(member);
+	}
+
+	@Override
+	public List<Category> getCategory() {
+		return boardDao.getCategory();
+	}
+
+	@Override
+	public List<Post> getMyPost(String me_id) {
+		return boardDao.getMyPost(me_id);
+	}
+
+	@Override
+	public List<Comment> getMyComment(String me_id) {
+		return boardDao.getMyComment(me_id);
+	}
+
+	@Override
+	public List<Board> getBoard(String ca_title) {
+		return boardDao.getBoard(ca_title);
+	}
+
+	@Override
+	public List<Post> getPost(int bo_num, int postListNum, int postListNum5) {
+		return boardDao.getPost(bo_num, postListNum, postListNum5);
+	}
+
+	@Override
+	public List<Post> getDetailPost(int num) {
+		return boardDao.getDetailPost(num);
+	}
+
+	@Override
+	public String getName(String name) {
+		return boardDao.getName(name);
+	}
+
+	@Override
+	public void updateView(int num) {
+		boardDao.updateView(num);
+	}
+
+	@Override
+	public boolean insertPost(Post post) {
+		if(post == null) {
+			return false;
+		}
+		return boardDao.insertPost(post);
+	}
+
+	@Override
+	public boolean insertComment(Comment comment) {
+		if(comment == null) {
+			return false;
+		}
+		return boardDao.insertComment(comment);
+	}
+
+	@Override
+	public List<Comment> getCommentList(int co_po_num) {
+		return boardDao.getCommentList(co_po_num);
 	}
 	
 }
