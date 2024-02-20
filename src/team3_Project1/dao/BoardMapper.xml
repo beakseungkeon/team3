@@ -109,4 +109,19 @@
   		set po_title = #{po_title}, po_content = #{po_content}
   		where po_num = #{po_num}
   	</update>
+  	<select id="getBoardTitle" resultType="string">
+		  select bo_title from board 
+		  where bo_num = #{boardMenu}
+	  </select>
+	  <delete id="deleteMyPost">
+		  delete from post
+		  where po_num = #{po_num}
+	  </delete>
+	  <delete id="deleteMyComment">
+		  delete from comment
+		  where co_po_num = #{po_num}
+	  </delete>
+	  <update id="updateMyComment">
+	  		update comment
+	  </update>
 </mapper>

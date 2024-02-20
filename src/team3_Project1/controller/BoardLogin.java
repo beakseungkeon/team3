@@ -31,6 +31,7 @@ public class BoardLogin {
 		if(id.equals("admin") && pw.equals("admin")) {
 			ManagerController managerController = new ManagerController();
 			managerController.run();
+			return;
 		}
 		memberMain(id, pw);
 	}

@@ -18,4 +18,8 @@ public class Comment {
 		this.co_po_num = co_po_num;
 		this.co_me_id = co_me_id;
 	}
+	public Comment(int co_num) {
+		super();
+		this.co_num = co_num;
+	}
 }

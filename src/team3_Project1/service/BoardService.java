@@ -37,8 +37,14 @@ public interface BoardService {
 
 	List<Comment> getCommentList(int co_po_num);
 
-	boolean updateMyBoard(int po_num, String po_title, String po_content);
+	void updateMyBoard(int po_num, String po_title, String po_content);
 
-	boolean deleteMyBoard(int po_num);
+	void deleteMyPost(int po_num);
+
+	String getBoardTitle(int boardMenu);
+
+	void deleteMyComment(int po_num);
+
+	void updateMyComment(int co_num);
 
 }

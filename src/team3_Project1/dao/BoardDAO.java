@@ -69,7 +69,13 @@ public interface BoardDAO {
 
 	void updateMyBoard(@Param("po_num")int po_num, @Param("po_title")String po_title, @Param("po_content")String po_content);
 
-	void deleteMyBoard(int po_num);
+	void deleteMyPost(int po_num);
+
+	String getBoardTitle(int boardMenu);
+
+	void deleteMyComment(int po_num);
+
+	void updateMyComment(int co_num);
 
 	
 }

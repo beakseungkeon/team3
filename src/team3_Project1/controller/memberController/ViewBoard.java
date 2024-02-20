@@ -107,34 +107,47 @@ public class ViewBoard {
 			for(Post i:postList) {
 				System.out.println(i.getPo_num() + ". " + i.getPo_title() + "   조회수: " + i.getPo_view() + "   작성자: " + i.getPo_me_name());
 			}
-			System.out.println("게시글 검색 : w");
+			String bo_title = boardService.getBoardTitle(boardMenu);
 			System.out.println("이전글 보기 : e");
-			System.out.println("게시글 작성 : s");
+			System.out.println("게시글 상세 보기 : w");
+			System.out.println("뒤로가기 : r");
+			if(!bo_title.equals("공지")) {
+				System.out.println("게시글 작성 : s");
+			}
 			if(postListNum != 0) {
 				System.out.println("다음글 보기 : q");
 				}
 			System.out.print("입력: ");
 			user = scan.next().charAt(0);
 			
+			if(user == 'w') {
+				detailPost();
+			}
+			
 			if(user == 's') {
+				if(bo_title.equals("공지")) {
+					System.out.println("공지에는 글을 작성할 수 없습니다.");
+					return;
+				}
 				WritePost writePost = new WritePost(scan);
 				writePost.run(id, boardService.getName(id), boardMenu);
 			}
 			
 			if(user=='e') {
 				postListNum = postListNum + 5;
-				postListNum5 = postListNum5 + 5;
-				System.out.println(postListNum);
-				System.out.println(postListNum5);
 			} else if(user == 'q') {
 				if(postListNum<=0) {
 					System.out.println("가장 최신 페이지입니다.");
 					return;
 				}
 				postListNum = postListNum - 5;
-				postListNum5 = postListNum5 - 5;
 				}
-			}while(user!='w');
+			}while(user!='r');
+	}
+	
+	
+
+	private void detailPost() {
 		System.out.print("게시글 번호 입력 : ");
 		int num = scan.nextInt();
 		List<Post> detailPost = boardService.getDetailPost(num);
@@ -157,7 +170,6 @@ public class ViewBoard {
 		if(scan.next().charAt(0)=='s') {
 			WriteComment writeComment = new WriteComment(scan);
 			writeComment.run(num, id);
-			
 		}
 	}
 
@@ -185,27 +197,19 @@ public class ViewBoard {
 		System.out.println("2. 글 삭제");
 		System.out.print("메뉴 선택 : ");
 		int postMenu = scan.nextInt();
-		manageMyBoard(postMenu, myPostList.get(index).getPo_num());
+		manageMyPost(postMenu, myPostList.get(index).getPo_num());
 	}
 
-	private void manageMyBoard(int postMenu, int po_num) {
-		ManageMyBoard manageMyBoard = new ManageMyBoard(po_num);
+	private void manageMyPost(int postMenu, int po_num) {
+		ManageMyPost manageMyPost = new ManageMyPost(scan);
 		switch(postMenu) {
 		case 1:
 			//게시글 수정
-			if(manageMyBoard.updateBoard()) {
-				System.out.println("수정완료");
-				return;
-			}
-			System.out.println("수정 실패");
+			manageMyPost.updatePost(po_num);
 			break;
 		case 2:
 			//게시글 삭제
-			if(manageMyBoard.deleteBoard()) {
-				System.out.println("삭제 성공");
-				return;
-			}
-			System.out.println("삭제 실패");
+			manageMyPost.deletePost(po_num);
 			break;
 		default: 
 			System.out.println("잘못된 선택");
@@ -221,10 +225,39 @@ public class ViewBoard {
 			System.out.println("작성한 댓글이 없습니다.");
 			return;
 		}
+		
 		for(Comment i:myCommentList) {
 			int num = i.getCo_po_num();
 			List<Post> detailPost = boardService.getDetailPost(num);
 			System.out.println(i.getCo_num() + ". " + i.getCo_content() + "   게시글 : " + detailPost.get(0).getPo_title() + "   게시글 작성자 : " + detailPost.get(0).getPo_me_name());
+		}
+		System.out.print("댓글 선택 : ");
+		int num = scan.nextInt();
+		Comment co_num = new Comment(num);
+		if(!myCommentList.contains(co_num)) {
+			System.out.println("해당하는 번호의 댓글이 존재하지 않습니다.");
+			return;
+		}
+		System.out.println("1. 댓글 수정");
+		System.out.println("2. 댓글 삭제");
+		int user = scan.nextInt();
+		manageMyComment(num, user);
+	}
+	
+	private void manageMyComment(int co_num, int user) {
+		ManageMyComment manageMyComment = new ManageMyComment(scan);
+		switch(user) {
+		case 1:
+			System.out.print("수정할 내용을 입력해주세요 : ");
+			String content = scan.nextLine();
+			//manageMyComment.updateMyComment(co_num, content);
+			break;
+		case 2:
+			manageMyComment.deleteMyComment(co_num);
+			break;
+		default:
+			System.out.println("잘못된 선택입니다.");
+			return;
 		}
 	}
 }

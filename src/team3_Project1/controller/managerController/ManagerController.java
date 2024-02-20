@@ -144,7 +144,7 @@ public class ManagerController {
 		}
 		System.out.println("삭제할 게시글명");
 		String bo_title="공지";
-		String po_title=scan.next();
+		String po_title=scan.nextLine();
 		if(managerService.deletePo(po_title,bo_title,ca_title)) {
 			System.out.println("내역을 삭제했습니다.");
 		}else {
@@ -182,7 +182,6 @@ public class ManagerController {
 			System.out.println("존재하지 않는 카테고리입니다.");
 			return;
 		}
-		
 		String bo_title="공지";
 		System.out.println("제목 입력");
 		String po_title=scan.next();

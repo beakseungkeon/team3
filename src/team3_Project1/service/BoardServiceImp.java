@@ -109,15 +109,30 @@ public class BoardServiceImp implements BoardService {
 	}
 
 	@Override
-	public boolean updateMyBoard(int po_num, String po_title, String po_content) {
+	public void updateMyBoard(int po_num, String po_title, String po_content) {
 		boardDao.updateMyBoard(po_num, po_title, po_content);
-		return true;
 	}
 
 	@Override
-	public boolean deleteMyBoard(int po_num) {
-		boardDao.deleteMyBoard(po_num);
-		return true;
+	public void deleteMyPost(int po_num) {
+		boardDao.deleteMyPost(po_num);
+	}
+
+	@Override
+	public String getBoardTitle(int boardMenu) {
+		return boardDao.getBoardTitle(boardMenu);
+	}
+
+	@Override
+	public void deleteMyComment(int po_num) {
+		boardDao.deleteMyComment(po_num);
+		
+	}
+
+	@Override
+	public void updateMyComment(int co_num) {
+		boardDao.updateMyComment(co_num);
+		
 	}
 	
 }
